@@ -1,44 +1,69 @@
 # mrm-agents-public
 
-MRM(개발 관제탑)의 병렬 AI 개발을 돌리는 **Claude Code 에이전트·스킬 전체 세트**를, 회사 특화 정보만 제거해 제네릭화한 오픈소스 배포판입니다.
+> A drop-in library of **90 subagents + 55 skills** for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — the specialist "engine" behind fast, parallel, AI-assisted development.
 
-MRM이 `claude -p`를 띄우면 Claude Code는 `~/.claude/agents`·`~/.claude/skills`에 설치된 에이전트·스킬을 자동 동원합니다. 즉 "알아서 잘 개발함"의 실체는 MRM 코드가 아니라 **이 에이전트/스킬 코퍼스**입니다. 이 저장소는 원본(103+55)에서 **회사 제품 라인 접두(`b2b-`/`b2c-`)를 제거하고 중복을 병합**했으며, 회사·제품·도메인·개인 식별자를 `${플레이스홀더}`로 치환했습니다.
+![license](https://img.shields.io/badge/license-MIT-blue) ![agents](https://img.shields.io/badge/agents-90-0d8079) ![skills](https://img.shields.io/badge/skills-55-9c6412)
 
-## 무엇이 들어있나
+## What is this?
 
-- **에이전트 90** — 코드 리뷰·테스트·DB조사·성능·보안·영향분석·빌드체크·설계·디버깅 + 플랫폼별(`backend-*`·`web-*`·`ios-*`·`android-*`) 전문가
-- **스킬 55** — 접근성·PR/커밋·유닛/E2E 테스트·체계적 디버깅·완료 전 검증·마이그레이션·워크플로 등
+Claude Code gets dramatically more capable when it can hand work to **specialist subagents** and follow **repeatable skills**. This repo is a curated library of both — code reviewers, test generators, migration workflows, debugging playbooks, planning pipelines — extracted from a real team's production setup and **genericized** (every company/product/domain identifier replaced with a `${PLACEHOLDER}`).
 
-전체 목록은 [`MANIFEST.md`](./MANIFEST.md), 설정할 값은 [`config.example.json`](./config.example.json) 참고.
+Drop them into `~/.claude/` and Claude Code picks them up automatically. Ask it to review a PR, generate tests, or trace an impact — and it routes to the right specialist in an isolated context, keeping your main thread clean.
 
-## 검증
+> These are the same agents/skills that power **MRM**, an AI dev control plane. The "magic" of parallel AI development lives here, not in the orchestrator — so this is the reusable core.
 
-모든 파일은 아래 마커가 **없음**을 자동 스캔으로 확인했습니다(대소문자 무시):
-회사명·조직·내부 호스트·노션 DB ID·Figma 키·DB 접속·AWS/SSH 경로·티켓 접두사·개인 절대경로.
+## What's inside
 
-원본 조직명·내부 호스트·노션/피그마 ID·DB 접속 정보가 남아있지 않습니다. `${...}` 플레이스홀더로 치환됐으며, 값을 채우려면 `config.example.json`을 참고하세요.
+### 🤖 Agents (90) — specialist subagents, isolated context
 
-## 설치
+| Group | Count | Examples |
+|---|:---:|---|
+| **General / AI-DLC** | 15 | `code-simplifier` · `debugger` · `spec-writer` · `tester` · `requirements-analyst` · `spec-compliance-reviewer` |
+| **Backend** | 33 | `backend-code-reviewer` · `backend-db-investigator` · `backend-security-reviewer` · `backend-perf-checker` · `backend-tdd-guide` |
+| **Web** (React / Next.js) | 4 | `web-design-analyzer` · `web-backlog-writer` · `web-policy-auditor` · `web-qa-reviewer` |
+| **Android** (Compose) | 14 | `android-tc-generator` · `android-build-healer` · `android-review-healer` · `android-unit-test-runner` |
+| **iOS** (SwiftUI / TCA) | 24 | `ios-build-checker` · `ios-feature-builder` · `ios-network-builder` · `ios-test-builder` · `ios-side-effect-analyzer` |
+
+### 🧩 Skills (55) — repeatable `/slash` workflows
+
+| Theme | Examples |
+|---|---|
+| **Testing** | `create-unit-test` · `create-e2e-test` · `create-integration-test` · `a11y-check` · `playwright-cli` · `hydration-debugger` |
+| **Code review** | `review-pr` · `review-api` · `policy-auditor` · `qa-reviewer` · `figma-design-audit` |
+| **Git & PR** | `create-commit` · `create-pr` · `commit-splitter` · `resolve-issue` · `shared-finishing-branch` · `shared-receiving-code-review` |
+| **Scaffolding** | `create-common-component` · `create-domain-feature` · `folder-structure` · `type-conventions` · `resolve-icon` |
+| **Migration** | `execute-domain-migration` · `verify-domain-migration` · `migration-workflow` · `report-migration-result` |
+| **Backlog & planning** | `figma-to-backlog` · `backlog-writer` · `design-analyzer` · `impact-analysis` · `api-integration` |
+| **Workflow orchestration** | `workflow` · `epic-workflow` · `backlog-execute` · `backlog-dashboard` · `figma-review-loop` (the `marty-*` suite) |
+| **Debugging & meta** | `shared-systematic-debugging` · `shared-verification-before-completion` · `shared-spec-self-review` · `skill-creator` |
+
+**Full list with one-line descriptions → [`MANIFEST.md`](./MANIFEST.md)**
+
+## Install
 
 ```bash
-./install.sh              # agents → ~/.claude/agents, skills → ~/.claude/skills 로 복사
+git clone https://github.com/jxxh204/mrm-agents-public
+cd mrm-agents-public
+./install.sh          # copies agents → ~/.claude/agents, skills → ~/.claude/skills
 ```
-Claude Code 재시작 후 `/agents`·`/skills`에서 확인.
 
-## 설정 (일부만 필요)
+Restart Claude Code, then confirm with `/agents` and `/skills`. For a single project instead of globally, copy into that repo's `.claude/agents` and `.claude/skills`.
 
-대부분의 에이전트/스킬(리뷰·테스트·디버깅 등)은 값 없이 바로 동작합니다.
-노션·Slack·Figma·특정 티켓 접두사를 쓰는 일부는 [`config.example.json`](./config.example.json)의 값을 채우거나, 해당 문구의 `${...}`를 자기 프로젝트 값으로 바꾸세요. 가장 많이 쓰이는 건 `${TICKET_PREFIX}`(티켓 접두사) 하나입니다.
+## Configuration
 
-## 재작성 권장 (프로젝트 적응 필요)
+Most agents/skills (review, testing, debugging, scaffolding) work with **zero config**.
+A few that touch Notion, Slack, Figma, or a ticket prefix use `${PLACEHOLDER}` tokens — fill them in [`config.example.json`](./config.example.json) or just replace the `${...}` inline. The most common one is `${TICKET_PREFIX}` (your issue key, e.g. `JIRA`).
 
-식별자는 제거됐지만 **디자인시스템 토큰 카탈로그·특정 도메인 지식이 본문**인 일부는 그대로 쓰면 의미가 얕습니다. [`REWRITE_NEEDED.md`](./REWRITE_NEEDED.md)에 목록과 이유를 정리했습니다 — 자기 디자인시스템/도메인에 맞게 손보거나 참고용으로만 쓰세요.
+## Notes
 
-## 유래
+- **Genericized origin.** Extracted from an internal setup; company/product/domain/personal identifiers were replaced with placeholders and the product-line prefixes (`b2b-`/`b2c-`) were removed with duplicates merged. Automated scans confirm **zero** residual identifiers.
+- **Content language.** Agent/skill bodies are written in **Korean**. (Contributions translating them are welcome.)
+- **Adapt-to-your-project files.** A handful reference a design system or a specific business domain — see [`REWRITE_NEEDED.md`](./REWRITE_NEEDED.md) to swap in your own.
 
-원본(103개 에이전트 + 55 스킬)은 한 팀의 내부 Claude Code 설정이며, MRM(오픈소스 개발 관제탑)과 함께 씁니다.
-`scrub.mjs`가 회사 식별자를 플레이스홀더로 치환하는 파이프라인입니다.
+## Contributing
 
-## 라이선스
+Issues and PRs welcome — new generic agents/skills, translations, or genericizing the "adapt" files. Keep contributions free of company-specific identifiers (no internal hosts, IDs, or credentials).
 
-[MIT](./LICENSE). 개별 에이전트/스킬 중 외부 출처 표기가 있는 것(예: `karpathy-guidelines`)은 원 출처를 따릅니다.
+## License
+
+[MIT](./LICENSE). Individual items citing an external source (e.g. `karpathy-guidelines`) follow their original attribution.
