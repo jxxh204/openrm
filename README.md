@@ -1,4 +1,4 @@
-# mrm-agents-public
+# OpenRM
 
 > A drop-in library of **90 subagents + 55 skills** for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — the specialist "engine" behind fast, parallel, AI-assisted development.
 
@@ -42,8 +42,8 @@ Drop them into `~/.claude/` and Claude Code picks them up automatically. Ask it 
 ## Install
 
 ```bash
-git clone https://github.com/jxxh204/mrm-agents-public
-cd mrm-agents-public
+git clone https://github.com/jxxh204/openrm
+cd openrm
 ./install.sh          # copies agents → ~/.claude/agents, skills → ~/.claude/skills
 ```
 
