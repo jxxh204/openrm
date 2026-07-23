@@ -1,16 +1,19 @@
 # OpenRM
 
-> A drop-in library of **90 subagents + 55 skills** for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — the specialist "engine" behind fast, parallel, AI-assisted development.
+> An AI dev control plane for [Claude Code](https://docs.anthropic.com/en/docs/claude-code): a **90 subagent + 55 skill** engine library, plus the **web app** that monitors and directs parallel AI agents across your git worktrees.
 
 ![license](https://img.shields.io/badge/license-MIT-blue) ![agents](https://img.shields.io/badge/agents-90-0d8079) ![skills](https://img.shields.io/badge/skills-55-9c6412)
 
-## What is this?
+This is a monorepo with two parts:
 
-Claude Code gets dramatically more capable when it can hand work to **specialist subagents** and follow **repeatable skills**. This repo is a curated library of both — code reviewers, test generators, migration workflows, debugging playbooks, planning pipelines — extracted from a real team's production setup and **genericized** (every company/product/domain identifier replaced with a `${PLACEHOLDER}`).
+- **[`agents/`](./agents), [`skills/`](./skills)** — the engine. Drop-in subagents and slash-command skills for Claude Code (see below).
+- **[`app/`](./app)** — the control plane. A Vite+Node web app that watches your worktrees/agents/PRs in real time and lets you dispatch work. Runs standalone with demo data, or point it at a repo that uses the `marty-workflow`/`backlog-execute` skills for the full live experience. **→ [`app/README.md`](./app/README.md) for setup.**
+
+## What is the engine?
+
+Claude Code gets dramatically more capable when it can hand work to **specialist subagents** and follow **repeatable skills**. `agents/` and `skills/` are a curated library of both — code reviewers, test generators, migration workflows, debugging playbooks, planning pipelines — extracted from a real team's production setup and **genericized** (every company/product/domain identifier replaced with a `${PLACEHOLDER}`).
 
 Drop them into `~/.claude/` and Claude Code picks them up automatically. Ask it to review a PR, generate tests, or trace an impact — and it routes to the right specialist in an isolated context, keeping your main thread clean.
-
-> These are the same agents/skills that power **MRM**, an AI dev control plane. The "magic" of parallel AI development lives here, not in the orchestrator — so this is the reusable core.
 
 ## What's inside
 

@@ -1,0 +1,65 @@
+{
+  "feature": "checkout-redesign",
+  "epic": "Q3 체크아웃 개편",
+  "phase": "빌드",
+  "lastUpdated": "2026-01-15T09:00:00.000Z",
+  "backlogs": [
+    {
+      "id": "demo-1",
+      "title": "장바구니 담기 버튼 반응속도 개선",
+      "branch": "PROJ-1001-cart-perf",
+      "status": "merged",
+      "figmaNodes": []
+    },
+    {
+      "id": "demo-2",
+      "title": "결제수단 등록 폼 유효성 검사",
+      "branch": "PROJ-1002-payment-validation",
+      "pr": 42,
+      "status": "review-requested",
+      "figmaNodes": []
+    },
+    {
+      "id": "demo-3",
+      "title": "주문 완료 페이지 리디자인",
+      "branch": "PROJ-1003-order-complete",
+      "pr": 43,
+      "status": "in-progress",
+      "figmaNodes": []
+    },
+    {
+      "id": "demo-4",
+      "title": "쿠폰 자동 적용 로직",
+      "branch": "PROJ-1004-coupon-autoapply",
+      "status": "plan",
+      "figmaNodes": []
+    },
+    {
+      "id": "demo-5",
+      "title": "배송지 검색 API 연동",
+      "branch": "PROJ-1005-address-search",
+      "status": "on-hold",
+      "figmaNodes": []
+    }
+  ],
+  "currentAgents": [
+    {
+      "agent": "demo-agent-1",
+      "color": "#58a6ff",
+      "tmuxSession": "mrm-demo-1",
+      "worktreePath": null,
+      "chain": ["demo-2"],
+      "pr": 42,
+      "note": "결제수단 등록 폼 — 이건 데모 데이터입니다. REPO_PATH를 실제 레포로 지정하면 진짜 워크트리/PR/터미널로 동작해요."
+    },
+    {
+      "agent": "demo-agent-2",
+      "color": "#3fb950",
+      "tmuxSession": "mrm-demo-2",
+      "worktreePath": null,
+      "chain": ["demo-3"],
+      "pr": 43,
+      "note": "주문 완료 페이지 리디자인 진행 중 (데모)"
+    }
+  ]
+}

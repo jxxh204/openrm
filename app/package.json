@@ -1,0 +1,33 @@
+{
+  "name": "openrm-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OpenRM · 병렬 AI 개발 관제탑 — 여러 워크트리·에이전트를 한 화면에서 감시·지시",
+  "type": "module",
+  "scripts": {
+    "server": "node server/index.cjs",
+    "dev": "vite",
+    "start": "node server/index.cjs & vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "postinstall": "chmod +x node_modules/node-pty/prebuilds/*/spawn-helper 2>/dev/null || true"
+  },
+  "dependencies": {
+    "@types/cytoscape": "^3.21.9",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "cytoscape": "^3.34.0",
+    "node-pty": "^1.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "ws": "^8.21.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.6"
+  }
+}

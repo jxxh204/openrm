@@ -1,0 +1,23 @@
+node_modules
+dist
+.DS_Store
+*.log
+server/test-runs
+.playwright-mcp
+tsconfig.tsbuildinfo
+.env
+.env.local
+.mrm-tasks.json
+.mrm-alerts.json
+.mrm-deploys.json
+.mrm-sessions.json
+
+# 자동로그인 테스트 계정(비번 평문) — 커밋 금지
+.mrm-dev-users.json
+.mrm-notion-titles.json
+.mrm-port-shops.json
+.mrm-preview-target
+.mrm-settings.json
+.mrm-prompts.json
+.mrm-cmd-images/
+.mrm-jobfails.json
