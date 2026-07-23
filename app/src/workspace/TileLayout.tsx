@@ -111,7 +111,7 @@ export default function TileLayout({ onExit }: { onExit?: () => void }) {
 function TopChips({ onDragStart, onDragEnd, onExit }: { onDragStart: (e: React.DragEvent, id: string) => void; onDragEnd: () => void; onExit?: () => void }) {
 	return (
 		<div className="ws-chips">
-			<span className="ws-brand">MRM</span>
+			<span className="ws-brand">OpenRM</span>
 			<button className="ws-mode-btn" onClick={onExit} title="사이드바 모드로 전환">
 				≡ 사이드바
 			</button>

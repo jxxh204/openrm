@@ -762,7 +762,7 @@ export default function WatchPage() {
 			)}
 
 			<div className="callout-box" style={{ marginTop: 16 }}>
-				🔔 MRM 서버가 <b>{st.intervalMs / 60000}분</b>마다 PR(CI·리뷰)과 이슈를 자동 폴링합니다. 변화 시
+				🔔 OpenRM 서버가 <b>{st.intervalMs / 60000}분</b>마다 PR(CI·리뷰)과 이슈를 자동 폴링합니다. 변화 시
 				토스트로 알리고 여기에 모읍니다. 해결된 항목이 다시 나타나면 <b>🔁 재발</b>로 표시합니다. 마지막 폴링{' '}
 				{ago(st.lastPoll)}.
 			</div>

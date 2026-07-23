@@ -12,7 +12,7 @@ interface Res {
 export default function ResourceBar() {
 	const [r, setR] = useState<Res | null>(null)
 	const path = useLocation().pathname
-	const onSessions = path === '/sessions' || path === '/command' // 개발실·디버깅은 자체 헤더가 있어 전역 바 숨김(중복·겹침 방지)
+	const onSessions = path === '/sessions' // 개발실은 자체 헤더가 있어 전역 바 숨김(중복·겹침 방지)
 	useEffect(() => {
 		const f = () =>
 			fetch('/api/resources')
@@ -37,7 +37,7 @@ export default function ResourceBar() {
 			<span className="resb-item" title="떠있는 dev 서버">
 				🖥️ dev <b>{r.devServers}</b>
 			</span>
-			<span className="resb-item" title="MRM이 띄운 터미널/tmux 세션 총수">
+			<span className="resb-item" title="OpenRM이 띄운 터미널/tmux 세션 총수">
 				📺 터미널 <b>{r.agents}</b>
 			</span>
 			{loops > 0 && (

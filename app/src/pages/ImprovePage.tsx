@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import XTerm from '../components/XTerm'
 import { useIsMobile } from '../hooks/useIsMobile'
 
-// MRM 개선 탭 — ① MRM 레포에서 claude 도는 임베드 터미널(자기 개선) ② 핵심 프롬프트 실시간 편집
+// OpenRM 개선 탭 — ① OpenRM 레포에서 claude 도는 임베드 터미널(자기 개선) ② 핵심 프롬프트 실시간 편집
 interface PromptDef {
 	key: string
 	group: string
@@ -69,15 +69,15 @@ export default function ImprovePage() {
 	return (
 		<>
 			<div className="page-head">
-				<h1>🛠️ MRM 개선</h1>
-				<p className="muted">MRM 자기 개선 — 이 레포에서 claude를 돌리는 터미널 + 각 기능이 쓰는 프롬프트를 실시간 편집</p>
+				<h1>🛠️ OpenRM 개선</h1>
+				<p className="muted">OpenRM 자기 개선 — 이 레포에서 claude를 돌리는 터미널 + 각 기능이 쓰는 프롬프트를 실시간 편집</p>
 			</div>
 
-			{/* ① MRM 레포 터미널 */}
+			{/* ① OpenRM 레포 터미널 */}
 			<section className="imp-term-sec">
 				<div className="imp-sec-head">
-					<span className="imp-sec-title">💻 MRM 레포 터미널</span>
-					<span className="muted" style={{ fontSize: 12 }}>cwd: (MRM 레포) · claude</span>
+					<span className="imp-sec-title">💻 OpenRM 레포 터미널</span>
+					<span className="muted" style={{ fontSize: 12 }}>cwd: (OpenRM 레포) · claude</span>
 					{!isMobile && (
 						<button className="ck-chip ghost" style={{ marginLeft: 'auto' }} onClick={() => { setSession(null); setTermErr(null); setTermKey((k) => k + 1) }} title="새 터미널로 재시작(재접속)">
 							↻ 재시작
@@ -85,7 +85,7 @@ export default function ImprovePage() {
 					)}
 				</div>
 				{isMobile ? (
-					<div className="imp-term-mobile muted">📱 폰에서는 터미널을 생략합니다 — 맥에서 열어 MRM을 직접 개선하세요. (아래 프롬프트 편집은 폰에서도 가능)</div>
+					<div className="imp-term-mobile muted">📱 폰에서는 터미널을 생략합니다 — 맥에서 열어 OpenRM을 직접 개선하세요. (아래 프롬프트 편집은 폰에서도 가능)</div>
 				) : termErr ? (
 					<div className="err">⚠️ {termErr}</div>
 				) : session ? (

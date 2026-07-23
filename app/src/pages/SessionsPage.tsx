@@ -6,7 +6,7 @@ import ConductorConsole from '../components/ConductorConsole'
 import PageSkeleton from '../components/Skeleton'
 import { ago } from '../api'
 
-// 병렬 개발 콕핏 — 작업 스트림(워크트리: git·PR/CI·dev서버) + MRM 호스팅 터미널 + cmux 세션 인수.
+// 병렬 개발 콕핏 — 작업 스트림(워크트리: git·PR/CI·dev서버) + OpenRM 호스팅 터미널 + cmux 세션 인수.
 interface PR {
 	number: number
 	state: string
@@ -182,7 +182,7 @@ const LINK_ROWS: { kind: LinkKind; icon: string; label: string }[] = [
 	{ kind: 'notion', icon: '📄', label: '노션' },
 	{ kind: 'figma', icon: '🎨', label: '피그마' },
 ]
-// 리뷰어(마티) 설득 + DX 지시 — MRM 에이전트가 코드만 던지지 않고 리뷰가 쉬운 브리핑으로 마무리하게.
+// 리뷰어(마티) 설득 + DX 지시 — OpenRM 에이전트가 코드만 던지지 않고 리뷰가 쉬운 브리핑으로 마무리하게.
 export const REVIEW_DIRECTIVE = `[리뷰 방식] 마티가 이 변경을 직접 리뷰해. 코드만 넘기지 말고 리뷰어를 '설득'하는 브리핑으로 마무리해줘 — 특히 DX(리뷰 경험)를 최우선으로: ① 무엇을·왜(각 결정의 근거를 먼저 밝혀 내가 의도를 역추적 안 하게) ② 고려했다 기각한 대안과 이유 ③ 먼저 봐야 할 파일:라인을 우선순위/읽는 순서까지 콕 집기 ④ 리스크·사이드이펙트·엣지케이스·하위호환 우려를 먼저 자백 ⑤ 실제로 한 검증(빌드/타입/테스트/수동)만, 안 한 건 안 했다고. 변경은 작고 목적이 분명한 단위로, 확신 없으면 단정 말고 근거와 함께.`
 
 // 업무의 링크/제목을 Claude 초기 지시로 묶기 — 에이전트가 스레드·노션·피그마를 읽고 진행하게.
@@ -225,7 +225,7 @@ const buildQaSeed = (t: WorkItem, reviewMode = true, notionParent = '') => {
 		`진행: ① Figma·노션·PR diff·이 워크트리 코드를 읽어 기능/화면/정책 파악 ② 정상 플로우 + 엣지케이스(빈값·경계·에러·권한·중복·발송실패·PC/웹뷰 차이·반응형) 위주로 TC 도출.`,
 		TC_TEMPLATE,
 		notionParent
-			? `산출물: 위 [TC 양식] 방식대로 예시 DB를 복제해 부모(${notionParent}) 하위에 "${title} — TC"로 만들고(스키마 재해석 금지) 도출한 TC를 행으로 채워줘. 다 만들면 DB URL을 알려주고, MRM에 등록해줘: curl -s -X POST http://localhost:8770/api/tasks/tc -H 'Content-Type: application/json' -d '{"ticket":"${
+			? `산출물: 위 [TC 양식] 방식대로 예시 DB를 복제해 부모(${notionParent}) 하위에 "${title} — TC"로 만들고(스키마 재해석 금지) 도출한 TC를 행으로 채워줘. 다 만들면 DB URL을 알려주고, OpenRM에 등록해줘: curl -s -X POST http://localhost:8770/api/tasks/tc -H 'Content-Type: application/json' -d '{"ticket":"${
 					t.ticket || t.key
 			  }","url":"<완성한 DB URL>"}' (이러면 E2E 생성 버튼이 활성화됨).`
 			: `산출물: (Notion 위치 미지정) _artifacts/${slug}-tc.html 로 저장하고 경로 알려줘.`,
@@ -1466,7 +1466,7 @@ export default function SessionsPage() {
 		}
 	}, [])
 
-	// MRM 터미널(tmux) 목록 폴링 (5s)
+	// OpenRM 터미널(tmux) 목록 폴링 (5s)
 	const loadTerms = () =>
 		fetch('/api/term')
 			.then((r) => r.json())
@@ -1525,12 +1525,12 @@ export default function SessionsPage() {
 			return n
 		})
 
-	// cmux 세션을 MRM 터미널로 인수: 같은 Claude 세션(--resume)을 그 워크트리에서 띄움.
+	// cmux 세션을 OpenRM 터미널로 인수: 같은 Claude 세션(--resume)을 그 워크트리에서 띄움.
 	// ⚠️ cmux의 원본이 아직 살아있으면 같은 세션이 2곳에서 돌 수 있음 → 인수 후 cmux 쪽을 닫는 게 안전.
 	const adoptCmux = (s: CmuxSession) => {
 		if (
 			!confirm(
-				`"${s.title}" 세션을 MRM 터미널로 인수합니다.\n\nclaude --resume ${s.sessionId.slice(
+				`"${s.title}" 세션을 OpenRM 터미널로 인수합니다.\n\nclaude --resume ${s.sessionId.slice(
 					0,
 					8
 				)}… 로 같은 대화를 이어받습니다.\n원본 cmux 세션이 아직 떠 있다면 인수 후 닫아주세요(중복 실행 방지).`
@@ -3217,7 +3217,7 @@ export default function SessionsPage() {
 				</div>
 			)}
 
-			{/* 🔄 재부팅 복원 — MRM이 띄웠던 세션 중 지금 안 떠있는 것 */}
+			{/* 🔄 재부팅 복원 — OpenRM이 띄웠던 세션 중 지금 안 떠있는 것 */}
 			{restorables.length > 0 && (
 				<div className="restore-banner">
 					<div className="rb-head">
@@ -4044,10 +4044,10 @@ export default function SessionsPage() {
 				})}
 			</div>
 
-			{/* ── cmux 세션 (이름만 → MRM 터미널로 인수) ── */}
+			{/* ── cmux 세션 (이름만 → OpenRM 터미널로 인수) ── */}
 			<h2 className="sec" style={{ marginTop: 24 }}>
 				📛 cmux 세션 <span className="muted">· {cmux.length}</span>
-				<span className="cmux-note">이름만 — 클릭하면 같은 Claude 세션을 MRM 터미널로 인수</span>
+				<span className="cmux-note">이름만 — 클릭하면 같은 Claude 세션을 OpenRM 터미널로 인수</span>
 			</h2>
 			{cmux.length === 0 && <p className="muted">실행 중인 cmux Claude 세션이 없습니다.</p>}
 			{Object.entries(cmuxByWs).map(([ws, list]) => (
@@ -4064,9 +4064,9 @@ export default function SessionsPage() {
 							<button
 								className="btn-send cmux-adopt"
 								onClick={() => adoptCmux(s)}
-								title="claude --resume 으로 같은 세션을 MRM 터미널에서 연다"
+								title="claude --resume 으로 같은 세션을 OpenRM 터미널에서 연다"
 							>
-								▶ MRM 터미널로 열기
+								▶ OpenRM 터미널로 열기
 							</button>
 						</div>
 					))}
@@ -4076,9 +4076,9 @@ export default function SessionsPage() {
 			<div className="callout-box" style={{ marginTop: 18 }}>
 				🛠️ <b>개발실</b> — <b>＋새 작업</b>: 티켓/브랜치 입력 → <code>git worktree add</code>로 격리 폴더 생성 →
 				그 안에서 <code>claude</code> 실행 + 초기 지시 주입.
-				<b> 개발 에이전트</b>는 영속 tmux라 MRM을 꺼도 살아있고, 타일을 <b>⛶ 포커스</b>하면 전체폭으로 직접
+				<b> 개발 에이전트</b>는 영속 tmux라 OpenRM을 꺼도 살아있고, 타일을 <b>⛶ 포커스</b>하면 전체폭으로 직접
 				타이핑할 수 있습니다.
-				<b> cmux 세션</b>은 <code>claude --resume</code>으로 인수 — 최종적으로 cmux 없이 MRM만 쓰기 위한 전환.
+				<b> cmux 세션</b>은 <code>claude --resume</code>으로 인수 — 최종적으로 cmux 없이 OpenRM만 쓰기 위한 전환.
 			</div>
 
 			{classModal &&

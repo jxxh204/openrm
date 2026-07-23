@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import XTerm from './XTerm'
 
-// 🤖 Claude 모니터링 루프 패널 — 진짜 트리아지는 Claude가, MRM은 띄우고 상태만.
+// 🤖 Claude 모니터링 루프 패널 — 진짜 트리아지는 Claude가, OpenRM은 띄우고 상태만.
 // kind로 ops(운영)/pr(PR) 등 여러 루프를 같은 UI로. MFA 인증 전엔 잠금.
 interface ClaudeStatus {
 	running: boolean
@@ -107,7 +107,7 @@ export default function ClaudeLoopPanel({
 				<p className="muted cm-hint">
 					{awsValid ? (
 						<>
-							▶ 시작하면 b2b-web 레포에서 <code>claude</code>를 띄우고 <code>/loop {clSec % 60 === 0 ? `${clSec / 60}m` : `${clSec}s`} {cl?.skill || ''}</code> 을 실행합니다. tmux라 MRM을 꺼도 루프는 계속 돕니다.
+							▶ 시작하면 대상 레포에서 <code>claude</code>를 띄우고 <code>/loop {clSec % 60 === 0 ? `${clSec / 60}m` : `${clSec}s`} {cl?.skill || ''}</code> 을 실행합니다. tmux라 OpenRM을 꺼도 루프는 계속 돕니다.
 						</>
 					) : (
 						<>

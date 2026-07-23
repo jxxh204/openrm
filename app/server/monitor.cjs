@@ -483,7 +483,7 @@ function ingestSlackEvent(ev) {
 }
 
 // ── Claude 모니터링 루프 (진짜 트리아지는 Claude가 — 코드는 띄우고 상태만 본다) ──
-// b2b-web 레포에서 claude를 띄우고 `/loop <N>m <skill>` 전송. tmux라 MRM 재시작에도 생존.
+// 대상 레포에서 claude를 띄우고 `/loop <N>m <skill>` 전송. tmux라 OpenRM 재시작에도 생존.
 // 루프 2종: ops(운영 장애 모니터링) · pr(PR 점검 모니터링) — 각각 독립 tmux 세션.
 const LOOPS = {
 	ops: { session: 'mrm-monitor', label: '운영', skill: process.env.MRM_MONITOR_SKILL || '/crm-ops-monitoring', defaultMin: 10 },

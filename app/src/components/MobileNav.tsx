@@ -7,9 +7,9 @@ import { PAGES } from '../workspace/pages'
 const NAV_BY_TO: Record<string, (typeof PAGES)[number]> = Object.fromEntries(PAGES.map((p) => [p.to, p]))
 const PRIMARY = ['/', '/watch', '/prs', '/fleet'] // 하단 고정 탭(감시·모니터·내PR·플릿)
 const MORE_GROUPS: { label: string; tos: string[] }[] = [
-	{ label: '핵심 작업', tos: ['/sessions', '/active', '/command', '/ppt'] },
-	{ label: '분석 · 참조', tos: ['/analyze', '/control', '/graph', '/tests', '/gtm', '/apimap'] },
-	{ label: 'MRM', tos: ['/improve'] },
+	{ label: '핵심 작업', tos: ['/sessions', '/active'] },
+	{ label: '분석 · 참조', tos: ['/analyze', '/control', '/graph', '/tests', '/apimap'] },
+	{ label: 'OpenRM', tos: ['/improve'] },
 ]
 
 export default function MobileNav() {
