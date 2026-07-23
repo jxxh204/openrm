@@ -16,13 +16,10 @@
 git clone https://github.com/jxxh204/openrm
 cd openrm/app
 npm install
-
-# 터미널 1 — 백엔드
-npm run server      # http://localhost:8770
-
-# 터미널 2 — 프론트
-npm run dev          # http://localhost:5180
+npm run start   # 백엔드(8770)+프론트(5180) 한 번에, 색으로 구분된 로그. Ctrl+C로 둘 다 종료
 ```
+
+따로 띄우고 싶으면 `npm run server` / `npm run dev`를 별도 터미널에서.
 
 `REPO_PATH`를 지정하지 않으면 **데모 모드**로 뜹니다 — 이 앱 자신을 대상 레포로 삼고, 번들된 가짜 백로그/에이전트 데이터(`demo/state.json`)로 화면 전체를 바로 확인할 수 있습니다.
 
